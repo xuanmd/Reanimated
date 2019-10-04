@@ -3,10 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Slider } from './src/CustomSlider/Slider';
 import { Cursor } from './src/CustomSlider/Cursor';
 import { ThemeSwitch } from './src/ThemeSwitch/ThemeSwitch';
+import { HeaderSearchBar } from './src/HeaderSearchBar/HeaderSearchBar';
 export default function App() {
   return (
     <View style={styles.container}>
-      <ThemeSwitch />
+      <HeaderSearchBar />
     </View>
   );
 }
@@ -14,8 +15,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#fff'
+    // alignItems: 'center'
+    // justifyContent: 'center'
   }
 });
