@@ -1,12 +1,11 @@
-import React, { memo, useEffect, useCallback, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet, Image } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import Animated, { Easing } from 'react-native-reanimated';
 import {
   horizontalPanGestureHandler,
   snapPoint,
-  interpolateColor,
-  approximates
+  interpolateColor
 } from 'react-native-redash';
 import { useMemoOne } from 'use-memo-one';
 interface IProps {}
@@ -32,8 +31,7 @@ const {
   Extrapolate,
   createAnimatedComponent,
   call,
-  neq,
-  or
+  neq
 } = Animated;
 
 const withTranslate = ({
