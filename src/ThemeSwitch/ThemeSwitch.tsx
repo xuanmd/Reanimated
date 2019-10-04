@@ -32,10 +32,16 @@ const {
   Extrapolate,
   createAnimatedComponent,
   call,
-  neq
+  neq,
+  or
 } = Animated;
 
-const withTranslate = ({ state: gestureState, translationX, velocityX }) => {
+const withTranslate = ({
+  state: gestureState,
+  translationX,
+  velocityX,
+  darkMode
+}) => {
   const clock = new Clock();
   const anchor = new Value(0);
   const state = {
@@ -48,7 +54,6 @@ const withTranslate = ({ state: gestureState, translationX, velocityX }) => {
   const leftBound = 0;
   const rightBound = 70;
   return block([
-    startClock(clock),
     cond(
       eq(gestureState, State.ACTIVE),
       [
@@ -73,6 +78,7 @@ const withTranslate = ({ state: gestureState, translationX, velocityX }) => {
             lessThan(state.position, rightBound)
           ),
           [
+            startClock(clock),
             timing(clock, state, {
               duration: 200,
               easing: Easing.inOut(Easing.ease),
@@ -81,6 +87,19 @@ const withTranslate = ({ state: gestureState, translationX, velocityX }) => {
                 rightBound
               ])
             })
+          ],
+          [
+            stopClock(clock),
+            cond(
+              and(
+                greaterOrEq(state.position, 70),
+                and(
+                  neq(gestureState, State.ACTIVE),
+                  neq(gestureState, State.BEGAN)
+                )
+              ),
+              call([], darkMode)
+            )
           ]
         )
       ]
@@ -101,10 +120,9 @@ const ThemeSwitch: React.SFC<IProps> = memo(props => {
   };
   useCode(
     block([
-      set(translateX, withTranslate({ state, translationX, velocityX })),
-      cond(
-        and(eq(translateX, 70), neq(state, State.ACTIVE)),
-        call([], darkMode)
+      set(
+        translateX,
+        withTranslate({ state, translationX, velocityX, darkMode })
       )
     ]),
     []
