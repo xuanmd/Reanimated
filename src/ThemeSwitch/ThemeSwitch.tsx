@@ -5,7 +5,8 @@ import Animated, { Easing } from 'react-native-reanimated';
 import {
   horizontalPanGestureHandler,
   snapPoint,
-  interpolateColor
+  interpolateColor,
+  toRad
 } from 'react-native-redash';
 import { useMemoOne } from 'use-memo-one';
 interface IProps {}
@@ -135,23 +136,36 @@ const ThemeSwitch: React.SFC<IProps> = memo(props => {
     outputRange: [0, 1],
     extrapolate: Extrapolate.CLAMP
   });
-  const backgroundColor = interpolateColor(translateX, {
-    inputRange: [0, 70],
-    outputRange: [{ r: 255, g: 255, b: 255 }, { r: 7, g: 11, b: 52 }]
-  });
   const borderColor = interpolateColor(translateX, {
     inputRange: [0, 70],
-    outputRange: [{ r: 200, g: 200, b: 200 }, { r: 100, g: 100, b: 100 }]
+    outputRange: [{ r: 245, g: 245, b: 245 }, { r: 100, g: 100, b: 100 }]
+  });
+  const rotateImage = interpolate(translateX, {
+    inputRange: [0, 70],
+    outputRange: [toRad(0), toRad(120)]
   });
   return (
-    <Animated.View style={[styles.switch, { backgroundColor, borderColor }]}>
+    <Animated.View style={[styles.switch, { borderColor }]}>
+      <Image
+        source={require('../../assets/bg1.png')}
+        style={{ width: 120, height: 50 }}
+      />
+      <Animated.Image
+        source={require('../../assets/bg2.png')}
+        style={{
+          width: 120,
+          height: 50,
+          position: 'absolute',
+          opacity: moonOpacity
+        }}
+      />
       <PanGestureHandler {...gestureHandler}>
         <Animated.View
           style={{
             width: 46,
             height: 46,
             position: 'absolute',
-            transform: [{ translateX }]
+            transform: [{ translateX, rotate: rotateImage }]
           }}
         >
           <AnimatedImage
@@ -175,7 +189,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 25,
-    borderWidth: 2
+    borderWidth: 2,
+    overflow: 'hidden'
   },
   switchIcon: {
     height: 46,
