@@ -4,10 +4,11 @@ import { Slider } from './src/CustomSlider/Slider';
 import { Cursor } from './src/CustomSlider/Cursor';
 import { ThemeSwitch } from './src/ThemeSwitch/ThemeSwitch';
 import { HeaderSearchBar } from './src/HeaderSearchBar/HeaderSearchBar';
+import { Home } from './src/YoutubeAnimation/Home';
 export default function App() {
   return (
     <View style={styles.container}>
-      <HeaderSearchBar />
+      <Home />
     </View>
   );
 }
