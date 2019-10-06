@@ -39,7 +39,7 @@ const PlayerProvider: React.SFC<IProps> = props => {
   };
   const translateY = interpolate(animatedValue, {
     inputRange: [0, 1],
-    outputRange: [height, 0]
+    outputRange: [0, height]
   });
   return (
     <videoContext.Provider value={{ video, selectVideo }}>
