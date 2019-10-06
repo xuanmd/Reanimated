@@ -3,7 +3,7 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { FooterIcon } from './FooterIcon';
 interface IProps {}
-const HEADER_HEIGHT = 80;
+const HEADER_HEIGHT = 60;
 
 const Footer: React.SFC<IProps> = props => {
   return (
