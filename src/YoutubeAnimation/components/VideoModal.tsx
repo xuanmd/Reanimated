@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { verticalPanGestureHandler, snapPoint } from 'react-native-redash';
 import Animated, { Easing } from 'react-native-reanimated';
@@ -22,12 +22,14 @@ const {
 const AnimatedVideo = createAnimatedComponent(Video);
 // ui
 import { View, StyleSheet, StatusBar, Dimensions } from 'react-native';
-import { videoContext } from './PlayerProvider';
 import { PlayerControl } from './PlayerControl';
 import { VideoContent } from './VideoContent';
 import { Video } from 'expo-av';
+import { Video as VideoInterface } from './videos';
 
-interface IProps {}
+interface IProps {
+  video: VideoInterface;
+}
 const { width, height } = Dimensions.get('window');
 // width: 411
 // height: 845
@@ -76,9 +78,8 @@ const withScroll = ({ velocityY, translationY, state: gestureState }) => {
     state.position
   ]);
 };
-
 const VideoModal: React.SFC<IProps> = props => {
-  const { video } = useContext(videoContext);
+  const { video } = props;
   const translateY = useMemoOne(() => new Value(0), []);
   const { velocityY, translationY, state, gestureHandler } = useMemoOne(
     () => verticalPanGestureHandler(),
@@ -134,7 +135,7 @@ const VideoModal: React.SFC<IProps> = props => {
           }
         ]}
       >
-        <PanGestureHandler {...gestureHandler} activeOffsetY={[-10, 10]}>
+        <PanGestureHandler {...gestureHandler}>
           <Animated.View
             style={{
               backgroundColor: 'white',

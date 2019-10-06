@@ -48,10 +48,10 @@ const PlayerProvider: React.SFC<IProps> = props => {
         <View style={StyleSheet.absoluteFill}>{props.children}</View>
         {isOS && (
           <Animated.View style={{ transform: [{ translateY }] }}>
-            {video && <VideoModal {...{ video }} />}
+            {video && <VideoModal video={video} />}
           </Animated.View>
         )}
-        {!isOS && video && <VideoModal {...{ video }} />}
+        {!isOS && video && <VideoModal video={video} />}
       </View>
     </videoContext.Provider>
   );
